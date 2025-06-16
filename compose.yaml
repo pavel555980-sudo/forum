@@ -1,0 +1,23 @@
+name: 'forum'
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+    env_file:
+      ./frontend/.env
+    command: npm run docker-dev
+    volumes:
+      - ./frontend/src:/usr/src/app/src
+  postgres:
+    image: postgres:16
+    volumes:
+      - ./postgres/data:/var/lib/postgresql/data
+  nginx:
+    build: ./nginx
+    volumes:
+      - ./nginx:/nginx
+    env_file:
+      - nginx/.env
+    ports:
+      - "8000:80"

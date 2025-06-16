@@ -1,0 +1,264 @@
+@font-face {
+  font-family: 'Montserrat-Medium';
+  src: url('../fonts/Montserrat/Montserrat-Medium.ttf') format('truetype')
+  
+}
+@font-face {
+  font-family: 'Montserrat-Bold';
+  src: url('../fonts/Montserrat/Montserrat-Bold.ttf') format('truetype')
+  
+}
+
+
+.h2-question{
+    background-color: #162F46;
+    color: #FFC94F;
+    text-align: start;
+    padding-left: 15px !important;
+    padding: 10px;
+    margin-bottom: 10px;
+    
+}
+
+
+.h2-answers{
+  background-color: #162F46;
+  color: #FFC94F;
+  text-align: start;
+  padding-left: 15px !important;
+  padding: 10px;
+  /* margin-bottom: 10px; */
+  margin-bottom: -15px;
+  margin-top: 25px;
+  font-family: Montserrat-Bold;
+}
+
+.date-question{
+    background-color: #162F46;
+    color: #ffffff;
+    text-align: start;
+    padding-left: 15px !important;
+    padding: 3px;
+    font-family: Montserrat-Medium ;
+}
+
+
+.question-page {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    padding: 20px; 
+    width: 70vw;
+    margin-left: 13% !important;
+    margin-top: 3% !important;
+  }
+
+
+.user-question{
+    width: 110px;
+    height: 100px;
+}
+
+.profile{
+    margin-top: 10px;
+    padding: 15px;
+    width: 110px;
+    height: 150px;
+    background-color: #162F46;
+    color: #ffffff;
+
+}
+
+.author-name{
+    font-family: Montserrat-Medium ;
+}
+
+.author-info{
+    display: flex;
+    align-items: flex-start;
+    position: relative;
+}
+
+.question-info, .answer-info{
+    padding: 10px;
+    display: flex;
+    align-items: flex-start;
+}
+
+.question-actions{
+   position:absolute; bottom:-40px; right: 0;
+}
+
+
+
+
+.like-btn, .dislike-btn {
+    padding: 10px;
+    margin-right: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+  }
+  
+  .answer-form {
+    margin-top: 20px;
+  }
+  
+  .answer-form h3 {
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .response-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .response-textarea {
+    width: 100%;
+    height: 110px;
+    padding: 20px;
+    margin: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: none;
+  }
+  
+  .submit-btn {
+    position:absolute; bottom:-40px; right: 0;
+  }
+  
+  .submit-btn:hover, .like-btn:hover, .dislike-btn:hover {
+    background-color: #c2c2c2;
+  }
+
+  .submit-btn{
+    padding: 10px;
+    margin-right: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+  }
+
+.answer-form{
+    position:relative;
+    bottom: 0;
+    width: 70vw;
+    padding: 20px;
+    margin-left: -20px;
+    padding-bottom: 150px;
+}
+
+.answers{
+    margin-top: 15px;
+    margin-bottom: 90px;
+}
+
+.answer{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    position: relative;
+    font-family: Montserrat-Medium;
+    font-size: 16px;
+}
+
+
+.answer-actions {
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.question-text,.answer-text{
+  max-width: 100vh;
+  overflow-wrap: break-word;
+  font-family: Montserrat-Bold ;
+}
+
+.h2-answers,.h2-question{
+  overflow-wrap: break-word;
+  font-family: Montserrat-Bold ;
+}
+
+.limit{
+  color: #ffb60c;
+  padding:15px;
+  position: absolute;
+}
+
+
+.limit-2{
+  color: #ffb60c;
+  padding:15px;
+
+}
+
+.author{
+  color:#162F46;
+  font-size: 16px;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #555;
+  text-transform: uppercase;
+}
+.like-btn.actioned,
+.dislike-btn.actioned {
+  background-color: #f2f2f2 !important;
+  color: #ff0000 !important; 
+}
+
+.h2-question-var{
+  overflow-wrap: break-word;
+  font-family: Montserrat-Bold ;
+  display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #162F46;
+    color: #FFC94F;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.author-p{
+  color: white !important;
+}
+
+.date-question-var{
+  background-color: #162F46;
+  color: #ffffff;
+  text-align: start;
+  padding-left: 15px !important;
+  padding: 8px;
+  font-family: Montserrat-Medium ;
+  text-align: center;
+  width: 200px;
+  max-width: 300px;
+
+}
+
+.userLogo{
+  width:56px;
+  height:56px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.textAndLogo{
+  display: inline;
+}
+
+.rating{
+  text-align: center;
+  color: #FFC94F;
+  padding: 2px;
+  font-weight: bold;
+}

@@ -1,0 +1,77 @@
+@font-face {
+    font-family: 'Montserrat';
+    src: url('../fonts/Montserrat/Montserrat-ExtraLight.ttf') format('truetype')
+}
+
+.questionsList{
+    color: white;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 100px;
+}
+
+.question{
+    background-color:#162F46;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1250px;
+    overflow-wrap: break-word;
+}
+
+.questionInfo p{
+    display: flex;
+    float: right;
+    max-width: 100%;
+    min-height: 2em;
+    
+}
+
+
+.arrow{
+    width: 30px;
+    height:30px;
+    padding-left: 1.1%;
+    padding-right: 1.1%;
+}
+
+.briefText{
+    float: left;
+    font-family: Montserrat;
+    font-size: 20px;
+    text-wrap: wrap;
+    flex-shrink: 1;
+    width: 75%;
+    padding: 15px 0;
+    overflow-wrap: break-word;
+}
+
+.createdAt{
+    font-family: Montserrat;
+    font-size: 14px;
+    margin-right: 1%;
+    padding-left: 5%;
+    display: inline-flex;
+    text-wrap: nowrap;
+    flex-shrink: 5;
+}
+
+.createdBy{
+    max-width: 10em;
+    font-family: Montserrat;
+    font-size: 20px;
+    text-wrap: nowrap;
+    display: inline-block;
+    margin-right: 2%;
+    flex-shrink: 5;
+}
+
+.link{
+    text-decoration: none;
+    color: white !important;
+    margin: 5px 0;
+}
