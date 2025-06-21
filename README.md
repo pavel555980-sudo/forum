@@ -48,5 +48,92 @@ v1.3:
 - Косметические изменения
 <br>
 Доп. фичи:
+<br>
 - Мобильное приложение под android
+<br>
 - Прикрипление файлов к сообщениям на форуме
+<br>
+```mermaid
+flowchart TD
+    User["`
+        User
+        <hr>
+        Id: UUID
+        RoleId: UUID
+        Nick: string
+        Name: string
+        Lastname: string
+        SettingsId: UUID
+    `"]
+    Message["`
+        Message
+        <hr>
+        Id: UUID
+        OwnerId: UUID
+        TargetId: UUID
+        Body: string
+    `"]
+    Thread["`
+        Thread
+        <hr>
+        Id: UUID
+        OwnerId: UUID
+        Header: string
+        Body: string
+    `"]
+    Comment["`
+        Comment
+        <hr>
+        Id: UUID
+        OwnerId: UUID
+        ThreadId: UUID
+        Body: string
+    `"]
+    Reply["`
+        Reply
+        <hr>
+        Id: UUID
+        OwnerId: UUID
+        CommentId: UUID
+        Body: string
+    `"]
+    UserSettings["`
+        UserSettings
+        <hr>
+        Id: UUID
+        UserId: UUID
+        IdDarkTheme: bool
+        IsAcceptingNewFriends: bool
+        IsMailNotificationsEnabled: bool
+        IsUsingMail2fa: bool
+        country: string | none
+        town: string | none
+    `"]
+    UserRoles["`
+        UserRoles
+        <hr>
+        id: UUID
+        name: string
+        CanMakeThreads: bool
+        CanReply: bool
+        CanSendMessages: bool
+        HaveModAccess: bool
+        CanUseAdminPanel: bool
+        CanMakeNewFriends: bool
+    `"]
+    UserToFriend["`
+        UserToFriend
+        <hr>
+        id: UUID
+        UserId: UUID
+        FriendId: UUID
+    `"]
+
+    Message --> User
+    Thread --> User
+    Comment --> Thread
+    Reply --> Comment
+    UserSettings --> User
+    UserRoles --> User
+    UserToFriend --> User
+```
