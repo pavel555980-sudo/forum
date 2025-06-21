@@ -53,8 +53,9 @@ v1.3:
 <br>
 - Прикрипление файлов к сообщениям на форуме
 <br>
+
 ```mermaid
-flowchart TD
+flowchart TD;
     User["`
         User
         <hr>
@@ -64,7 +65,7 @@ flowchart TD
         Name: string
         Lastname: string
         SettingsId: UUID
-    `"]
+    `"];
     Message["`
         Message
         <hr>
@@ -72,7 +73,7 @@ flowchart TD
         OwnerId: UUID
         TargetId: UUID
         Body: string
-    `"]
+    `"];
     Thread["`
         Thread
         <hr>
@@ -80,7 +81,7 @@ flowchart TD
         OwnerId: UUID
         Header: string
         Body: string
-    `"]
+    `"];
     Comment["`
         Comment
         <hr>
@@ -88,7 +89,7 @@ flowchart TD
         OwnerId: UUID
         ThreadId: UUID
         Body: string
-    `"]
+    `"];
     Reply["`
         Reply
         <hr>
@@ -96,7 +97,7 @@ flowchart TD
         OwnerId: UUID
         CommentId: UUID
         Body: string
-    `"]
+    `"];
     UserSettings["`
         UserSettings
         <hr>
@@ -108,7 +109,7 @@ flowchart TD
         IsUsingMail2fa: bool
         country: string | none
         town: string | none
-    `"]
+    `"];
     UserRoles["`
         UserRoles
         <hr>
@@ -120,20 +121,20 @@ flowchart TD
         HaveModAccess: bool
         CanUseAdminPanel: bool
         CanMakeNewFriends: bool
-    `"]
+    `"];
     UserToFriend["`
         UserToFriend
         <hr>
         id: UUID
-        UserId: UUID
-        FriendId: UUID
-    `"]
+        UserId: UUID;
+        FriendId: UUI
+    `"];
 
-    Message --> User
-    Thread --> User
-    Comment --> Thread
-    Reply --> Comment
-    UserSettings --> User
-    UserRoles --> User
-    UserToFriend --> User
+    Message --> User;
+    Thread --> User;
+    Comment --> Thread;
+    Reply --> Comment;
+    UserSettings --> User;
+    UserRoles --> User;
+    UserToFriend --> User;
 ```
