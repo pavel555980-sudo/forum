@@ -6,9 +6,9 @@ from sqlalchemy import pool
 
 from alembic import context
 
-from otvetoved_core.infrastructure.config import ConfigProvider, Config
-from otvetoved_core.infrastructure.database import RelationalMapper
-from otvetoved_core.domain.models import *  # noqa: F401, F403
+from forum_auth.infrastructure.config import ConfigProvider, Config
+from forum_auth.infrastructure.database import RelationalMapper
+from forum_auth.domain.models import *  # noqa: F401, F403
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -46,8 +46,7 @@ def run_migrations_offline() -> None:
 
     """
     application_config = container.get(Config)
-    url = (config.get_main_option("sqlalchemy.url")
-           or application_config.database.url)
+    url = config.get_main_option("sqlalchemy.url") or application_config.database.url
     context.configure(
         url=url,
         target_metadata=target_metadata,
@@ -77,9 +76,7 @@ def run_migrations_online() -> None:
     )
 
     with connectable.connect() as connection:
-        context.configure(
-            connection=connection, target_metadata=target_metadata
-        )
+        context.configure(connection=connection, target_metadata=target_metadata)
 
         with context.begin_transaction():
             context.run_migrations()

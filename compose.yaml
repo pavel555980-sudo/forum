@@ -33,3 +33,10 @@ services:
       - nginx/.env
     ports:
       - "8000:80"
+  auth-run-migrations:
+    build: ./backend/auth
+    depends_on:
+      - postgres-auth
+    command: alembic upgrade head
+    env_file:
+      - ./backend/auth/.env

@@ -6,7 +6,7 @@ from forum_auth.domain.models import User
 class UserView(ModelView, model=User):
     column_list = [
         User.id,
-        User.username,
+        User.nick,
         User.email,
         User.sessions,
     ]

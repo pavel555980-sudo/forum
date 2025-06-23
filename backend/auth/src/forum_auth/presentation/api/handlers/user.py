@@ -3,6 +3,7 @@ from fastapi import APIRouter
 from fastapi.responses import JSONResponse
 from sqlalchemy import select
 from pydantic import UUID4
+from sqlalchemy import ForeignKey
 
 from forum_auth.domain.models.user import User
 from forum_auth.infrastructure.database import DatabaseSession
@@ -17,7 +18,7 @@ router = APIRouter(prefix="/user/{user_session}", tags=["user"])
     "/get_friends",
     name="",
     status_code=200,
-    response_model=UserTotalRateDTO,
+    response_model=FriendsDTO,
     responses={
         404: {
             "content": {

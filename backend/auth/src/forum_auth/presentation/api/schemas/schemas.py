@@ -90,13 +90,13 @@ SessionToken = Annotated[
 
 
 class UserDTO(BaseDTO):
-    username: Username
+    nick: Nick
     id: UserID
     email: UserEmail
 
 
 Friends = Annotated[
-    List[UserDTO],
+    list[UserDTO],
     Field(
         title="All user friends.",
     ),
@@ -111,9 +111,9 @@ class UserRegisterForm(BaseDTO):
     password: Password
 
 
-class UserRegisterResponse(BaseResponse):
+class UserRegisterResponse(BaseDTO):
     id: UserID
-    username: Username
+    nick: Nick
     name: Name
     lastname: LastName
     email: UserEmail

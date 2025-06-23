@@ -2,19 +2,30 @@ from __future__ import annotations
 
 from datetime import datetime
 from typing import TYPE_CHECKING
+import uuid
 
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy import ForeignKey
 
 from forum_auth.infrastructure.relational_entity import (
     BaseRelationalEntity,
 )
 
 
+class UserToFriend(BaseRelationalEntity):
+    __tablename__ = "user_to_friend"
+    id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), default=uuid.uuid4, primary_key=True)
+    userId: Mapped[UUID] = mapped_column(ForeignKey("user.id"))
+    friendId: Mapped[UUID] = mapped_column(ForeignKey("user.id"))
+
+
 class User(BaseRelationalEntity):
     __tablename__ = "user"
 
-    id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), default=uuid.uuid4)
+    id: Mapped[UUID] = mapped_column(
+        UUID(as_uuid=True), default=uuid.uuid4, primary_key=True
+    )
 
     email: Mapped[str] = mapped_column()
     nick: Mapped[str] = mapped_column(unique=True)
@@ -25,13 +36,6 @@ class User(BaseRelationalEntity):
 
     sessions: Mapped[list[UserSession]] = relationship(back_populates="user")
     friends: Mapped[list[User]] = relationship(
-        secondary=UserTotalRateDTO.__table__,
+        secondary=UserToFriend.__table__,
         lazy="selectin",
     )
-
-
-class UserToFriend(BaseRelationalEntity):
-    __tablename__ = "user_to_friend"
-    id: Mapped[UUID] = mapped_column(default=uuid.uuid4)
-    userId: Mapped[UUID] = mapped_column(ForeignKey("user.id"))
-    friendId: Mapped[UUID] = mapped_column(ForeignKey("user.id"))
