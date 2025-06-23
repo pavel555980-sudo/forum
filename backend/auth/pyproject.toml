@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+
+[project]
+name = "forum-application"
+version = "1.0"
+license = {file = "LICENCE"}
+dependencies = [
+    "dishka",
+    "pydantic-settings",
+    "psycopg[binary]",
+    "sqlalchemy",
+    "fastapi~=0.111.0",
+    "alembic",
+    "bcrypt",
+    "sqladmin[full]",
+]
+
+
+[project.optional-dependencies]
+dev = [
+    "ruff",
+]
+
+
+[project.scripts]
+forum-auth-api = "forum_auth.main.api:main"
