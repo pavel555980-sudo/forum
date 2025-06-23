@@ -47,6 +47,7 @@ def run_migrations_offline() -> None:
     """
     application_config = container.get(Config)
     url = config.get_main_option("sqlalchemy.url") or application_config.database.url
+    print("URL:", url)
     context.configure(
         url=url,
         target_metadata=target_metadata,

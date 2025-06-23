@@ -21,9 +21,7 @@ app = FastAPI(
     title="FORUM REST API",
 )
 
-origins = [
-    "*"
-]
+origins = ["*"]
 
 app.add_middleware(
     CORSMiddleware,
@@ -55,7 +53,7 @@ async def prepare():
         ConfigProvider(),
         DatabaseProvider(),
     )
-    await include_admin(container, app)
+    # await include_admin(container, app)
     setup_dishka(container, app)
 
 

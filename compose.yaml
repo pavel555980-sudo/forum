@@ -11,10 +11,14 @@ services:
       - ./frontend/src:/usr/src/app/src
   postgres:
     image: postgres:16
+    env_file:
+      - ./postgres_auth/.env
     volumes:
       - ./postgres/data:/var/lib/postgresql/data
   postgres-auth:
     image: postgres:16
+    env_file:
+      - ./postgres_auth/.env
     volumes:
       - ./postgres_auth/data:/var/lib/postgrsql/data
   backend-auth:

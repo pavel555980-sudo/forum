@@ -15,7 +15,9 @@ from forum_auth.infrastructure.relational_entity import (
 
 class UserToFriend(BaseRelationalEntity):
     __tablename__ = "user_to_friend"
-    id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), default=uuid.uuid4, primary_key=True)
+    id: Mapped[UUID] = mapped_column(
+        UUID(as_uuid=True), default=uuid.uuid4, primary_key=True
+    )
     userId: Mapped[UUID] = mapped_column(ForeignKey("user.id"))
     friendId: Mapped[UUID] = mapped_column(ForeignKey("user.id"))
 
