@@ -46,7 +46,7 @@ Password = Annotated[
 ]
 
 UserID = Annotated[
-    int,
+    UUID4,
     Field(
         title="Идентификатор пользователя.",
     ),

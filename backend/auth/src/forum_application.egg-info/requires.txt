@@ -1,0 +1,11 @@
+dishka
+pydantic-settings
+psycopg[binary]
+sqlalchemy
+fastapi~=0.111.0
+alembic
+bcrypt
+sqladmin[full]
+
+[dev]
+ruff

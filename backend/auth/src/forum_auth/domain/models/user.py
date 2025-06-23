@@ -1,13 +1,15 @@
 from __future__ import annotations
 
-from datetime import datetime
 from typing import TYPE_CHECKING
 import uuid
+from datetime import datetime
 
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy import ForeignKey, or_
 from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy import ForeignKey
+from sqlalchemy.orm import Mapped, mapped_column, relationship, foreign, remote
 
+if TYPE_CHECKING:
+    from forum_auth.domain.models import UserSession
 from forum_auth.infrastructure.relational_entity import (
     BaseRelationalEntity,
 )
@@ -39,5 +41,8 @@ class User(BaseRelationalEntity):
     sessions: Mapped[list[UserSession]] = relationship(back_populates="user")
     friends: Mapped[list[User]] = relationship(
         secondary=UserToFriend.__table__,
+        primaryjoin=id == UserToFriend.userId,
+        secondaryjoin=UserToFriend.friendId == id,
         lazy="selectin",
+        viewonly=True
     )

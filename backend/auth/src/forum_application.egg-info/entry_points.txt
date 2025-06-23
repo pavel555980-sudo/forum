@@ -1,0 +1,2 @@
+[console_scripts]
+forum-auth-api = forum_auth.main.api:main

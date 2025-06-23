@@ -6,6 +6,7 @@
     <option name="pathToExecutable" value="$USER_HOME$/.local/bin/black" />
     <option name="sdkName" value="Python 3.12" />
   </component>
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.12 (forum)" project-jdk-type="Python SDK" />
   <component name="PythonCompatibilityInspectionAdvertiser">
     <option name="version" value="3" />
   </component>

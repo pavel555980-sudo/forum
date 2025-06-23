@@ -1,0 +1,13 @@
+Metadata-Version: 2.4
+Name: forum-application
+Version: 1.0
+Requires-Dist: dishka
+Requires-Dist: pydantic-settings
+Requires-Dist: psycopg[binary]
+Requires-Dist: sqlalchemy
+Requires-Dist: fastapi~=0.111.0
+Requires-Dist: alembic
+Requires-Dist: bcrypt
+Requires-Dist: sqladmin[full]
+Provides-Extra: dev
+Requires-Dist: ruff; extra == "dev"
