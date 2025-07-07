@@ -32,7 +32,7 @@ const RegistrationModal = ({ onClose, onLoginClick }) => {
       return;
     }
 
-    fetch('https://otvetoved.ru/api/v1/authentication/register', {
+    fetch('http://forum-postgres-auth/v1/auth/register', {
         method: 'POST',
         mode: 'cors',
         headers: {
@@ -55,7 +55,7 @@ const RegistrationModal = ({ onClose, onLoginClick }) => {
         toast.success(`Вы успешно зарегистрировались: ${data.username}`);
         console.log('Sending data:', { username, password });
 
-        return fetch('https://otvetoved.ru/api/v1/authentication', {
+        return fetch('http://forum-postgres-auth/v1/api/auth', {
             method: 'POST',
             mode: 'cors',
             headers: {

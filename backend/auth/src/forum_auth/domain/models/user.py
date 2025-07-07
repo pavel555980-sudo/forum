@@ -4,12 +4,12 @@ from typing import TYPE_CHECKING
 import uuid
 from datetime import datetime
 
-from sqlalchemy import ForeignKey, or_
+from sqlalchemy import ForeignKey, or_, event
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship, foreign, remote
 
 if TYPE_CHECKING:
-    from forum_auth.domain.models import UserSession
+    from forum_auth.domain.models import UserSession, UserSettings
 from forum_auth.infrastructure.relational_entity import (
     BaseRelationalEntity,
 )
@@ -37,6 +37,8 @@ class User(BaseRelationalEntity):
     lastname: Mapped[str] = mapped_column()
     password: Mapped[str] = mapped_column()
     created_at: Mapped[datetime] = mapped_column(default=datetime.now)
+    user_role_id: Mapped[UUID] = mapped_column(ForeignKey("user_roles.id"), default="501d19f7-1e91-4739-adfa-805724b2d0bc")
+
 
     sessions: Mapped[list[UserSession]] = relationship(back_populates="user")
     friends: Mapped[list[User]] = relationship(
@@ -45,4 +47,11 @@ class User(BaseRelationalEntity):
         secondaryjoin=UserToFriend.friendId == id,
         lazy="selectin",
         viewonly=True
+    )
+    settings: Mapped["UserSettings"] = relationship(
+        "UserSettings",
+        back_populates="user",
+        cascade="all, delete-orphan",
+        uselist=False,
+        single_parent=True
     )

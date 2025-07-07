@@ -17,7 +17,7 @@ class UserRoles(BaseRelationalEntity):
         UUID(as_uuid=True), default=uuid.uuid4, primary_key=True
     )
     name: Mapped[str] = mapped_column()
-    can_use_global_activity: Mapped[bool] = mapped_column()
+    can_use_global_activity: Mapped[bool] = mapped_column() #like create new threads or leave comments
     can_send_messages: Mapped[bool] = mapped_column()
     can_make_new_friends: Mapped[bool] = mapped_column()
     have_mod_access: Mapped[bool] = mapped_column()

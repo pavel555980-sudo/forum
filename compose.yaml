@@ -23,12 +23,19 @@ services:
       - ./postgres_auth/data:/var/lib/postgrsql/data
     ports:
       - "9451:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "sh -c 'pg_isready -U ${APP__DATABASE__USER}'"]
+      interval: 30s
+      timeout: 60s
+      retries: 5
+      start_period: 80s
   backend-auth:
     build: ./backend/auth
     env_file: 
       - backend/auth/.env
     depends_on:
       - postgres-auth
+      - auth-run-migrations
     volumes:
       - ./backend/auth/src:/usr/src/app/src
     ports:

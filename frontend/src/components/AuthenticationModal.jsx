@@ -23,7 +23,7 @@ const AuthenticationModal = ({ onClose, onRegisterClick }) => {
     }
 
     console.log('Sending data:', { username, password });
-    fetch('https://otvetoved.ru/api/v1/authentication', {
+    fetch('http://forum-postgres-auth/v1/api/auth', {
       method: 'POST',
       mode: 'cors',
       headers: {

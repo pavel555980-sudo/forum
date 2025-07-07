@@ -8,7 +8,7 @@ from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.dialects.postgresql import UUID
 
-
+from forum_auth.domain.models import User
 from forum_auth.infrastructure.relational_entity import (
     BaseRelationalEntity,
 )
@@ -21,9 +21,10 @@ class UserSettings(BaseRelationalEntity):
     user_id: Mapped[UUID] = mapped_column(
         ForeignKey("user.id", ondelete="cascade"), primary_key=True
     )
+    user: Mapped["User"] = relationship("User", back_populates="settings")
     is_dark_theme: Mapped[bool] = mapped_column(default=False)
     is_accepting_new_friends: Mapped[bool] = mapped_column(default=True)
     is_mail_notifications_enabled: Mapped[bool] = mapped_column(default=False)
     is_using_mail_2fa: Mapped[bool] = mapped_column(default=False)
-    country: Mapped[str] = mapped_column()
-    town: Mapped[str] = mapped_column()
+    country: Mapped[str] = mapped_column(default="")
+    town: Mapped[str] = mapped_column(default="")

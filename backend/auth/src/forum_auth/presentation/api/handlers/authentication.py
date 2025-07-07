@@ -7,6 +7,7 @@ from fastapi.responses import JSONResponse
 from pydantic import UUID4
 from sqlalchemy import select, ScalarResult
 
+from forum_auth.domain.models import UserSettings
 from forum_auth.domain.models.user import User
 from forum_auth.domain.models.user_session import UserSession
 from forum_auth.infrastructure.database import DatabaseSession
@@ -54,6 +55,9 @@ async def create_new_account(
         password=bcrypt.hashpw(salt=salt, password=payload.password.encode()).decode(
             "utf-8"
         ),
+        settings=UserSettings(
+
+        )
     )
     session.add(user)
     await session.flush()
