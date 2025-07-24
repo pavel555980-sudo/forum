@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import Rautheact, { useState, useEffect } from 'react';
 import RegistrationModal from './RegistrationModal.jsx';
 import { Toaster, toast } from 'react-hot-toast';
 import './Modal.css';
@@ -23,15 +23,15 @@ const AuthenticationModal = ({ onClose, onRegisterClick }) => {
     }
 
     console.log('Sending data:', { username, password });
-    fetch('http://forum-postgres-auth/v1/api/auth', {
+    fetch('http://localhost:8000/api/v1/auth', {
       method: 'POST',
       mode: 'cors',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        username,
-        password,
+        "nick": username,
+        "password": password,
       }),
     })
       .then(response => {

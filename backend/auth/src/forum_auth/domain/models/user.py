@@ -37,7 +37,7 @@ class User(BaseRelationalEntity):
     lastname: Mapped[str] = mapped_column()
     password: Mapped[str] = mapped_column()
     created_at: Mapped[datetime] = mapped_column(default=datetime.now)
-    user_role_id: Mapped[UUID] = mapped_column(ForeignKey("user_roles.id"), default="501d19f7-1e91-4739-adfa-805724b2d0bc")
+    user_role_id: Mapped[UUID] = mapped_column(ForeignKey("user_roles.id"))
 
 
     sessions: Mapped[list[UserSession]] = relationship(back_populates="user")

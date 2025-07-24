@@ -7,7 +7,7 @@ from fastapi.responses import JSONResponse
 from pydantic import UUID4
 from sqlalchemy import select, ScalarResult
 
-from forum_auth.domain.models import UserSettings
+from forum_auth.domain.models import UserSettings, UserRoles
 from forum_auth.domain.models.user import User
 from forum_auth.domain.models.user_session import UserSession
 from forum_auth.infrastructure.database import DatabaseSession
@@ -43,9 +43,22 @@ async def create_new_account(
     session: FromDishka[DatabaseSession],
 ):
     stmt = select(User).where(User.nick == payload.nick)
-    users: ScalarResult = await session.scalars(stmt)
+    users = await session.scalars(stmt)
     if users.one_or_none():
         raise HTTPException(403, "User with this nickname already exists")
+    stmt = select(UserRoles).where(UserRoles.name == "DEFAULT")
+    default_role = (await session.scalars(stmt)).one_or_none()
+    if default_role is None:вопрос
+        default_role = UserRoles(
+            name="DEFAULT",
+            can_use_global_activity=True,
+            can_send_messages=True,
+            can_make_new_friends=True,
+            have_mod_access=False,
+        )
+        session.add(default_role)
+        await session.flush()
+        await session.commit()
     salt = bcrypt.gensalt()
     user = User(
         nick=payload.nick,
@@ -55,6 +68,7 @@ async def create_new_account(
         password=bcrypt.hashpw(salt=salt, password=payload.password.encode()).decode(
             "utf-8"
         ),
+        user_role_id=default_role.id,
         settings=UserSettings(
 
         )

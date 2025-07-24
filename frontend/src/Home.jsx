@@ -32,7 +32,7 @@ function Home() {
       <meta property="og:description" content="Задайте вопрос и получите ответ от пользователей!"/>
       <meta property="og:image" content={preview}/>
       <meta property="og:site_name" content="Ответовед"/>
-      <meta property="og:url" content="https://otvetoved.ru"/>
+      <meta property="og:url" content="https://localhost:8000"/>
       <meta property="og:type" content="website"/>
       <meta property="og:image_type" content="image/png"/>
       
@@ -42,7 +42,7 @@ function Home() {
       <div className='body'>
         {isUserAuthenticated ? (
           <button className='createQuestion' onClick={openModal}>
-            Создать вопрос
+            Создать ветку
           </button>
         ) : (
           <button className='createQuestion notAuth' disabled>

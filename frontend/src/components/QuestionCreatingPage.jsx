@@ -14,7 +14,7 @@ const QuestionCreatingPage = ({ onClose }) => {
 
   const handlePublication = () => {
     if (!brief.trim()) {
-      toast.error('Введите заголовок вопроса.');
+      toast.error('Введите заголовок ветки.');
       return;
     }
 
@@ -29,7 +29,7 @@ const QuestionCreatingPage = ({ onClose }) => {
       session_token: sessionToken, 
     };
 
-    fetch('https://otvetoved.ru/api/v1/questions', {
+    fetch('https://localhost:8000/main_api/v1/threads', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ const QuestionCreatingPage = ({ onClose }) => {
     <div className="question-modal">
       <div className="question-content">
         <span className="close" onClick={onClose}>&times;</span>
-        <h2 className="question-head">Создание вопроса</h2>
+        <h2 className="question-head">Создание ветки</h2>
         <form onSubmit={e => {
           e.preventDefault();
           handlePublication(); 
@@ -73,7 +73,7 @@ const QuestionCreatingPage = ({ onClose }) => {
             maxLength={MAX_BRIEF_LENGTH}
           />
           <small className="limit">{brief.length}/{MAX_BRIEF_LENGTH}</small>
-          <p className="question-p">Текст вопроса</p>
+          <p className="question-p">Текст ветки</p>
           <textarea
             className="question-textarea"
             value={text}
@@ -82,6 +82,7 @@ const QuestionCreatingPage = ({ onClose }) => {
           ></textarea>
           <small className="limit">{text.length}/{MAX_TEXT_LENGTH}</small>
           <button type="submit" className="question-button">Опубликовать</button>
+
         </form>
       </div>
     </div>

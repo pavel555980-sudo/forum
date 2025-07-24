@@ -7,7 +7,7 @@ import {Link} from "react-router-dom";
 const QuestionsList = () => {
   const [questions, setQuestions] = useState([]);
   useEffect(() => {
-    fetch('https://otvetoved.ru/api/v1/questions')
+    fetch('https://localhost:8000/api/v1/questions')
       .then((res) => {
         return res.json();
       })

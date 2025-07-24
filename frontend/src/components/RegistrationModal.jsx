@@ -7,7 +7,9 @@ const RegistrationModal = ({ onClose, onLoginClick }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
-  const [showAuthentication, setShowAuthentication] = useState(false); 
+  const [name, setName] = useState('');
+  const [lastname, setLastname] = useState('');
+  const [showAuthentication, setShowAuthentication] = useState(false);
   const [sessionToken, setSessionToken] = useState(localStorage.getItem('sessionToken') || '');
 
   const handleRegister = () => {
@@ -32,16 +34,18 @@ const RegistrationModal = ({ onClose, onLoginClick }) => {
       return;
     }
 
-    fetch('http://forum-postgres-auth/v1/auth/register', {
+    fetch('http://localhost:8000/api/v1/auth/register', {
         method: 'POST',
         mode: 'cors',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            username,
-            email,
-            password,
+            "nick": username,
+            "name": name,
+            "lastname": lastname,
+            "email": email,
+            "password": password,
         }),
     })
     .then(response => {
@@ -55,7 +59,7 @@ const RegistrationModal = ({ onClose, onLoginClick }) => {
         toast.success(`Вы успешно зарегистрировались: ${data.username}`);
         console.log('Sending data:', { username, password });
 
-        return fetch('http://forum-postgres-auth/v1/api/auth', {
+        return fetch('http://localhost:8000/v1/api/auth', {
             method: 'POST',
             mode: 'cors',
             headers: {
@@ -99,6 +103,8 @@ const RegistrationModal = ({ onClose, onLoginClick }) => {
         <h2 className="modal-head">Регистрация</h2>
         <form>
           <input type="text" className="modal-input" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Имя пользователя" />
+          <input type="text" className="modal-input"  value={name} onChange={(e) => setName(e.target.value)} placeholder="Имя" />
+          <input type="text" className="modal-input"  value={password} onChange={(e) => setLastname(e.target.value)} placeholder="Фамилия" />
           <input type="email" className="modal-input"  value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Почта" />
           <input type="password" className="modal-input"  value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Пароль" />
           <button className="modal-button" type="button"  onClick={handleRegister}>Зарегистрироваться</button>

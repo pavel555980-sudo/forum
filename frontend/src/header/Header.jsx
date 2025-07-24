@@ -16,7 +16,7 @@ export default function Header() {
 
   useEffect(() => {
     if (sessionToken) {
-      fetch('http://localhost/api/v1/authentication' + sessionToken)
+      fetch('http://localhost:8000/api/v1/auth/me?session_token=' + sessionToken)
         .then(response => {
           if (response.ok) {
             return response.json();
@@ -30,7 +30,7 @@ export default function Header() {
           }
         })
         .then(data => {
-          setUsername(data.username);
+          setUsername(data.nick);
           console.log('User Name:', data.username);
         })
         .catch(error => {
@@ -45,7 +45,7 @@ export default function Header() {
   
 
   const handleExit = () => {
-    fetch('http://localhost/api/v1/authentication/close_session?session_token=' + sessionToken, {
+    fetch('http://localhost:8000/api/v1/auth/close_session?session_token=' + sessionToken, {
       method: 'DELETE'
     })
     .then(response => {
@@ -84,7 +84,12 @@ export default function Header() {
             Настройки
           </h2>
         </div>
-        <div className='user' onClick={() => setShowLogin(true)}>
+        <div className='user' onClick={() => {
+          if (!sessionToken)
+          {
+            setShowLogin(true)
+          }
+        }}>
         <h1 className='userText'>{username || 'Войдитe'}</h1>
                 <img src={userLogo} className="userLogo" alt="Profile" />
                 {isLoggedIn && (

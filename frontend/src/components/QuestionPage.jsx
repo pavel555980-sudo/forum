@@ -32,7 +32,7 @@ const QuestionPage = () => {
     const fetchData = async () => {
       try {
        const questionResponse = await fetch(
-        `https://otvetoved.ru/api/v1/questions/${question_id}`,
+        `https://localhost:8000/api/v1/questions/${question_id}`,
         {
           headers: {
             Authorization: `Bearer ${sessionToken}`
@@ -43,7 +43,7 @@ const QuestionPage = () => {
         setQuestion(questionData);
 
         const answersResponse = await fetch(
-            `https://otvetoved.ru/api/v1/questions/${question_id}/answers`,
+            `https://localhost:8000/api/v1/questions/${question_id}/answers`,
             {
               headers: {
                 Authorization: `Bearer ${sessionToken}`
@@ -53,7 +53,7 @@ const QuestionPage = () => {
          answersData = await answersResponse.json();
         const updatedAnswersData = await Promise.all(answersData.map(async (answer) => {
           const ratingResponse = await fetch(
-              `https://otvetoved.ru/api/v1/answers/${answer.id}/rating`,
+              `https://localhost:8000/api/v1/answers/${answer.id}/rating`,
               {
                   headers: {
                       Authorization: `Bearer ${sessionToken}`
@@ -68,7 +68,7 @@ const QuestionPage = () => {
 
       const userActionsPromises = answersData.map(async (answer) => {
         const userActionsResponse = await fetch(
-          `https://otvetoved.ru/api/v1/answers/${answer.id}/rating/me?session_token=` + sessionToken, {
+          `https://localhost:8000/api/v1/answers/${answer.id}/rating/me?session_token=` + sessionToken, {
             headers: {
               Authorization: `Bearer ${sessionToken}`
             }
@@ -101,7 +101,7 @@ const QuestionPage = () => {
       try {
         const userIds = new Set([...answers.map(answer => answer.created_by_user.id), question?.created_by_user.id]);
         const promises = Array.from(userIds).map(async userId => {
-          const response = await fetch(`https://otvetoved.ru/api/v1/user/${userId}/total_rate`, {
+          const response = await fetch(`https://localhost:8000/api/v1/user/${userId}/total_rate`, {
             headers: {
               Authorization: `Bearer ${sessionToken}`
             }
@@ -141,7 +141,7 @@ const QuestionPage = () => {
 
     
     try {
-      const response = await fetch(`https://otvetoved.ru/api/v1/questions/${question_id}/answers`, { 
+      const response = await fetch(`https://localhost:8000/api/v1/questions/${question_id}/answers`, {
         method: 'POST',
         headers: {
            Authorization: `Bearer ${sessionToken}`,            
@@ -173,7 +173,7 @@ const QuestionPage = () => {
 
   const handleLike = async (id, action) => {
     try {
-      const response = await fetch(`https://otvetoved.ru/api/v1/answers/${id}/rating`, {
+      const response = await fetch(`https://localhost:8000/api/v1/answers/${id}/rating`, {
         method: 'PUT',
         headers: {
           Authorization: `Bearer ${sessionToken}`,
@@ -220,7 +220,7 @@ function getActionByType(userActionsData, answerId, action) {
       <meta property="og:description" content={question?.text || 'Описание'}/>
       <meta property="og:image" content={preview}/>
       <meta property="og:site_name" content="Ответовед"/>
-      <meta property="og:url" content='https://otvetoved.ru/questions'/>
+      <meta property="og:url" content='https://localhost:8000/questions'/>
       <meta property="og:type" content="website"/>
       <meta property="og:image_type" content="image/png"/>
     </Helmet>
