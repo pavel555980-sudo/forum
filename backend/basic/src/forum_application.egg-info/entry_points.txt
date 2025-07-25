@@ -1,0 +1,2 @@
+[console_scripts]
+forum-basic-api = forum_basic.main.api:main

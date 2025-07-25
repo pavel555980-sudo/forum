@@ -48,7 +48,7 @@ async def create_new_account(
         raise HTTPException(403, "User with this nickname already exists")
     stmt = select(UserRoles).where(UserRoles.name == "DEFAULT")
     default_role = (await session.scalars(stmt)).one_or_none()
-    if default_role is None:вопрос
+    if default_role is None:
         default_role = UserRoles(
             name="DEFAULT",
             can_use_global_activity=True,

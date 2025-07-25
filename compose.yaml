@@ -15,6 +15,12 @@ services:
       - ./postgres_auth/.env
     volumes:
       - ./postgres/data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "sh -c 'pg_isready -U ${APP__DATABASE__USER}'"]
+      interval: 30s
+      timeout: 60s
+      retries: 5
+      start_period: 80s
   postgres-auth:
     image: postgres:16
     env_file:
@@ -40,6 +46,17 @@ services:
       - ./backend/auth/src:/usr/src/app/src
     ports:
       - "7652:8000"
+  backend-basic:
+    build: ./backend/basic
+    env_file: 
+      - backend/basic/.env
+    depends_on:
+      - postgres
+      - basic-run-migrations
+    volumes:
+      - ./backend/basic/src:/usr/src/app/src
+    ports:
+      - "7653:8000"
   nginx:
     build: ./nginx
     volumes:
@@ -51,7 +68,7 @@ services:
     depends_on:
       - backend-auth
       - frontend
-  tool-alembic:
+  auth-tool-alembic:
     profiles:
       - tools
     build: ./backend/auth
@@ -71,3 +88,23 @@ services:
       - ./backend/auth/.env
     volumes:
       - ./backend/auth/alembic:/usr/src/app/alembic
+  basic-tool-alembic:
+    profiles:
+      - tools
+    build: ./backend/basic
+    depends_on:
+      - postgres
+    entrypoint: alembic
+    env_file:
+      - ./backend/basic/.env
+    volumes:
+      - ./backend/basic/alembic:/usr/src/app/alembic
+  basic-run-migrations:
+    build: ./backend/basic
+    depends_on:
+      - postgres
+    entrypoint: alembic upgrade head
+    env_file:
+      - ./backend/basic/.env
+    volumes:
+      - ./backend/basic/alembic:/usr/src/app/alembic
