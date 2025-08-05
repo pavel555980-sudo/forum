@@ -1,8 +1,11 @@
-from datetime import datetime
+import os
+from datetime import datetime, timedelta
 
 import bcrypt
+import jwt
 from dishka.integrations.fastapi import inject, FromDishka
 from fastapi import APIRouter, HTTPException
+from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 from pydantic import UUID4
 from sqlalchemy import select, ScalarResult
@@ -16,11 +19,12 @@ from forum_auth.presentation.api.schemas.schemas import (
     AuthDTO,
     UserRegisterResponse,
     UserRegisterForm,
-    UserDTO,
+    UserDTO, JWTResponseDTO,
 )
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
+SECRET_KEY = os.getenv("APP__SECRET_JWT_KEY")
 
 @router.post(
     "/register",
@@ -123,9 +127,8 @@ async def create_new_session(
 
     return AuthResponseDTO.model_validate(user_session)
 
-
 @router.get(
-    "/me",
+    "",
     name="Получение информации о пользователе по session_token",
     response_model=UserDTO,
     responses={
@@ -141,7 +144,8 @@ async def create_new_session(
 )
 @inject
 async def get_user_by_session(
-    session_token: UUID4, session: FromDishka[DatabaseSession]
+        session_token: UUID4,
+        session: FromDishka[DatabaseSession]
 ):
     stmt = select(UserSession).where(UserSession.session_token == session_token)
     sessions = await session.scalars(stmt)
@@ -158,7 +162,7 @@ async def get_user_by_session(
 
 
 @router.delete(
-    "/close_session",
+    "",
     status_code=200,
     name="Закрыть сессию",
 )
@@ -180,3 +184,54 @@ async def close_session(
             "detail": f"Session {session_token} closed",
         },
     )
+
+@router.post(
+    "/{session_token}/JWT",
+    status_code=200,
+    name="Generate new JWT token",
+    response_model=JWTResponseDTO,
+    responses={
+        404: {
+            "content": {
+                "application/json": {
+                    "example": {
+                        "detail": "User session not found token"
+                    }
+                }
+            }
+        }
+    }
+)
+@inject
+async def generate_jwt(
+        session_token: UUID4,
+        session: FromDishka[DatabaseSession],
+):
+    stmt = select(UserSession).where(UserSession.session_token == session_token)
+    user_session = (await session.scalars(stmt)).one_or_none()
+
+    if not user_session:
+        raise HTTPException(404, f"Session {session_token} not found")
+
+    user = user_session.user
+
+    stmt = select(UserRoles).where(UserRoles.id == user.user_role_id)
+    role: UserRoles = (await session.scalars(stmt)).one_or_none()
+
+
+    data = {
+        "nick": user.nick,
+        "user_id": str(user.id),
+        "can_use_global_activity": role.can_use_global_activity,
+        "expire_date": (datetime.now() + timedelta(minutes=30)).isoformat(),
+    }
+
+
+
+    access_token = jwt.encode(
+        data,
+        SECRET_KEY,
+        algorithm="HS256",
+    )
+
+    return JWTResponseDTO(access_token=access_token)

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './styles/App.css'
-import QuestionsList from './QuestionsList'
-import QuestionCreatingPage from './components/QuestionCreatingPage'
+import ThreadsList from './ThreadsList.jsx'
+import ThreadCreatingPage from './components/ThreadCreatingPage.jsx'
 import {Helmet} from 'react-helmet'
 import preview from './assets/preview.png'
 
@@ -24,21 +24,6 @@ function Home() {
 
   return (
     <>
-
-    <Helmet>
-      <title>Forum</title>
-      <meta name="description" content="Ответовед место для вопросов"/>
-      <meta property="og:title" content="Ответовед.ру"/>
-      <meta property="og:description" content="Задайте вопрос и получите ответ от пользователей!"/>
-      <meta property="og:image" content={preview}/>
-      <meta property="og:site_name" content="Ответовед"/>
-      <meta property="og:url" content="https://localhost:8000"/>
-      <meta property="og:type" content="website"/>
-      <meta property="og:image_type" content="image/png"/>
-      
-      
-    </Helmet>
-
       <div className='body'>
         {isUserAuthenticated ? (
           <button className='createQuestion' onClick={openModal}>
@@ -49,8 +34,8 @@ function Home() {
             Вы должны быть авторизованы
           </button>
         )}
-        {isModalOpen && <QuestionCreatingPage onClose={closeModal} />}
-        <QuestionsList />
+        {isModalOpen && <ThreadCreatingPage onClose={closeModal} />}
+        <ThreadsList />
       </div>
     </>
   )

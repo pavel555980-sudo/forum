@@ -71,7 +71,7 @@
     color: #000000;
   }
   
-  .question-textarea{
+  -textarea{
     width: 400px;
     height: 190px;
     border: 1px solid #ccc;
@@ -82,7 +82,7 @@
     margin-bottom: 10px;
   }
   
-  .question-input {
+  -input {
     margin-bottom: 10px;
     width: 440px; 
     height: 25px;
@@ -90,7 +90,7 @@
   }
 
     
-  .question-content {
+  -content {
     position: relative;
     background-color: #162F46;
     border-radius: 10px;
@@ -103,7 +103,7 @@
   }
 
     
-  .question-head {
+  -head {
     color: #FFC94F;
     margin-top: 25px;
     margin-bottom: 25px;
@@ -111,7 +111,7 @@
   }
 
 
-  .question-button {
+  -button {
     border-radius: 15px;
     background-color: #FFC94F !important;
     width: 300px;
@@ -121,7 +121,7 @@
     font-size: 18px;
   }
 
-  .question-p {
+  .thread-p {
     display:flex;
     color: white;
     padding: 10px;
@@ -130,7 +130,7 @@
     font-weight: bold;
   }
 
-  .question-modal{
+  .thread-modal{
     display: flex;
     justify-content: center;
     align-items: center;

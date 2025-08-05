@@ -1,341 +1,342 @@
-import React, { useState, useEffect } from 'react';
-import './QuestionPage.css';
+import React, { useState, useEffect, useCallback } from 'react';
+import './ThreadPage.css';
 import user from './../assets/default-user.png';
-import {useParams} from "react-router-dom";
-import {Helmet} from 'react-helmet'
-import preview from './../assets/preview.png'
+import { useParams } from "react-router-dom";
+import { Helmet } from 'react-helmet';
+import preview from './../assets/preview.png';
 import { toast } from 'react-hot-toast';
-import userLogo from '../assets/user.png';
 
-
-const QuestionPage = () => {
+const ThreadPage = () => {
   const { id } = useParams();
-  const question_id = id;
-  const [question, setQuestion] = useState(null);
-  const [answers, setAnswers] = useState([]);
-  const [newAnswer, setNewAnswer] = useState('');
-  const [userActionsData, setUserActionsData] = useState([]);
+  const jwtToken = localStorage.getItem('jwtToken');
+  const thread_id = id;
+  const [thread, setThread] = useState(null);
+  const [newComment, setNewComment] = useState('');
   const sessionToken = localStorage.getItem('sessionToken');
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
+  const [usersMap, setUsersMap] = useState({});
+  const [activeReplyCommentId, setActiveReplyCommentId] = useState(null);
+  const [replyContent, setReplyContent] = useState('');
 
   const MAX_TEXT_LENGTH = 5000;
 
+  // Функция для загрузки данных треда
+  const fetchThreadData = useCallback(async () => {
+    try {
+      const threadResponse = await fetch(
+          `http://localhost:8000/main_api/v1/thread/${thread_id}`,
+          {
+            method: 'GET',
+            headers: { Authorization: `Bearer ${sessionToken}` }
+          }
+      );
 
-  const [userRatings, setUserRatings] = useState({});
+      const threadData = await threadResponse.json();
+      setThread(threadData);
+    } catch (error) {
+      console.error('Failed to fetch thread:', error);
+      toast.error('Ошибка загрузки треда');
+    }
+  }, [sessionToken, thread_id]);
 
-  
-
+  // Эффект для загрузки треда
   useEffect(() => {
     setIsUserAuthenticated(!!sessionToken);
-    let answersData = []
-    let answersActions = []
-    const fetchData = async () => {
-      try {
-       const questionResponse = await fetch(
-        `https://localhost:8000/api/v1/questions/${question_id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${sessionToken}`
-          }
-        }
-      );
-        const questionData = await questionResponse.json();
-        setQuestion(questionData);
+    fetchThreadData();
+  }, [sessionToken, thread_id, fetchThreadData]);
 
-        const answersResponse = await fetch(
-            `https://localhost:8000/api/v1/questions/${question_id}/answers`,
-            {
-              headers: {
-                Authorization: `Bearer ${sessionToken}`
-              }
-            }
-          );
-         answersData = await answersResponse.json();
-        const updatedAnswersData = await Promise.all(answersData.map(async (answer) => {
-          const ratingResponse = await fetch(
-              `https://localhost:8000/api/v1/answers/${answer.id}/rating`,
-              {
-                  headers: {
-                      Authorization: `Bearer ${sessionToken}`
-                  }
-              }
-          );
-          const ratingData = await ratingResponse.json();
-          return { ...answer, likes: ratingData.likes, dislikes: ratingData.dislikes };
-      }));
-      
-      setAnswers(updatedAnswersData);
+  // Функция для загрузки данных пользователя
+  const fetchUser = useCallback(async (userId) => {
+    if (!userId || usersMap[userId]) return;
 
-      const userActionsPromises = answersData.map(async (answer) => {
-        const userActionsResponse = await fetch(
-          `https://localhost:8000/api/v1/answers/${answer.id}/rating/me?session_token=` + sessionToken, {
-            headers: {
-              Authorization: `Bearer ${sessionToken}`
-            }
-          }
-        );
-        const userActionData = await userActionsResponse.json(); 
-        const action = userActionData.action; 
-        return { answerId: answer.id, action }; 
+    try {
+      const response = await fetch(`http://localhost:8000/api/v1/user/${userId}`, {
+        method: 'GET'
       });
-      
-      const userActionsData = await Promise.all(userActionsPromises);
-      console.log(userActionsData);
-      setUserActionsData(userActionsData);
-        
-      } catch (error) {
-        console.error('Failed to fetch question and answers:', error);
+
+      if (response.ok) {
+        const userData = await response.json();
+        setUsersMap(prev => ({ ...prev, [userId]: userData.nick }));
+      } else {
+        setUsersMap(prev => ({ ...prev, [userId]: "Пользователь" }));
       }
-      
-    };
+    } catch (error) {
+      setUsersMap(prev => ({ ...prev, [userId]: "Пользователь" }));
+    }
+  }, [sessionToken, usersMap]);
 
-    fetchData();
-  },[sessionToken]);
-
-
-
+  // Эффект для загрузки пользователей
   useEffect(() => {
+    if (!thread) return;
 
-    const fetchUserRatings = async () => {
-      console.log("1")
-      try {
-        const userIds = new Set([...answers.map(answer => answer.created_by_user.id), question?.created_by_user.id]);
-        const promises = Array.from(userIds).map(async userId => {
-          const response = await fetch(`https://localhost:8000/api/v1/user/${userId}/total_rate`, {
-            headers: {
-              Authorization: `Bearer ${sessionToken}`
-            }
-          });
-          const dataRat = await response.json();
-          console.log(`data:${dataRat}`)
-          return { [userId]: dataRat.user_rating };
-        });
-        const ratings = await Promise.all(promises);
-        setUserRatings(Object.assign({}, ...ratings));
-      } catch (error) {
-        console.error('Failed to fetch user ratings:', error);
-      }
-    };
-    console.log(userRatings);
+    const userIds = new Set();
+    if (thread.user_id) userIds.add(thread.user_id);
 
-    
-    
-    fetchUserRatings();
-  }, [answers, question, sessionToken]);
+    thread.comments?.forEach(comment => {
+      if (comment.user_id) userIds.add(comment.user_id);
+      comment.replies?.forEach(reply => {
+        if (reply.user_id) userIds.add(reply.user_id);
+      });
+    });
 
+    userIds.forEach(userId => fetchUser(userId));
+  }, [thread, fetchUser]);
+
+  // Отправка основного комментария
   const handleAnswerSubmit = async (e) => {
     e.preventDefault();
-
-    if (!newAnswer.trim()) {
-      toast.error('Введите ответ.');
+    if (!newComment.trim()) {
+      toast.error('Комментарий не может быть пустым');
       return;
     }
 
-    if (!isUserAuthenticated)
-    {
-      toast.error('Авторизуйтесь.');
-      return;
-    }
-      
-    
-
-    
     try {
-      const response = await fetch(`https://localhost:8000/api/v1/questions/${question_id}/answers`, {
+      const response = await fetch(`http://localhost:8000/main_api/v1/thread/${thread_id}`, {
         method: 'POST',
         headers: {
-           Authorization: `Bearer ${sessionToken}`,            
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          text: newAnswer,
-          session_token: sessionToken
-        }),
+          jwt: jwtToken,
+          content: newComment
+        })
       });
 
-      
-
       if (response.ok) {
-        const newAnswerData = await response.json();
-        setAnswers([...answers, newAnswerData]);
-        toast.success('Спасибо за ваш ответ!');
-        setNewAnswer('');
-        setTimeout(() => {
-          window.location.reload();
-      }, 2000); 
+        setNewComment('');
+        await fetchThreadData();
+        toast.success('Комментарий добавлен');
       } else {
-        console.error('Failed to submit answer:', response.statusText);
+        console.log(response);
+        toast.error('Ошибка при добавлении комментария');
       }
     } catch (error) {
-      console.error('Failed to submit answer:', error);
+      toast.error('Ошибка сети');
     }
   };
 
-  const handleLike = async (id, action) => {
+  // Отправка ответа на комментарий
+  const handleReplySubmit = async (parentId) => {
+    if (!replyContent.trim()) {
+      toast.error('Ответ не может быть пустым');
+      return;
+    }
+
     try {
-      const response = await fetch(`https://localhost:8000/api/v1/answers/${id}/rating`, {
-        method: 'PUT',
-        headers: {
-          Authorization: `Bearer ${sessionToken}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          action: action,
-          session_token: sessionToken
-        }),
-      });
+      const response = await fetch(
+          `http://localhost:8000/main_api/v1/thread/${thread_id}/${parentId}`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${sessionToken}`
+            },
+            body: JSON.stringify({
+              jwt: jwtToken,
+              content: replyContent
+            })
+          }
+      );
 
       if (response.ok) {
-        const updatedData = await response.json();
-        const updatedAnswers = answers.map(answer => {
-          if (answer.id === id) {
-            return { ...answer, likes: updatedData.likes, dislikes: updatedData.dislikes };
-          }
-          return answer;
-        });
-        setAnswers(updatedAnswers);
+        setReplyContent('');
+        setActiveReplyCommentId(null);
+        await fetchThreadData();
+        toast.success('Ответ добавлен');
       } else {
-        console.error(`Failed to update ${id}: ${response.statusText}`);
+        toast.error('Ошибка при добавлении ответа');
       }
     } catch (error) {
-      console.error(`Failed to update ${id}: ${error}`);
+      toast.error('Ошибка сети');
     }
-};
+  };
 
-function getActionByType(userActionsData, answerId, action) {
-  console.log(userActionsData);
-  console.log('Searching for action with answerId:', answerId, 'and action:', action);
-  const foundAction = userActionsData.find(item => item.answerId === answerId && item.action === action);
-  console.log('Found action:', foundAction);
-  return foundAction;
-}
-  
-  
   return (
-    <div className="question-page">
-    <Helmet>
-      <title>Ответовед</title>
-      <meta name="description" content="Ответовед место для вопросов"/>
-      <meta property="og:title" content={question?.brief || 'Заголовок'}/>
-      <meta property="og:description" content={question?.text || 'Описание'}/>
-      <meta property="og:image" content={preview}/>
-      <meta property="og:site_name" content="Ответовед"/>
-      <meta property="og:url" content='https://localhost:8000/questions'/>
-      <meta property="og:type" content="website"/>
-      <meta property="og:image_type" content="image/png"/>
-    </Helmet>
+      <div className="thread-page">
+        {thread && (
+            <>
+              {thread.content.length === 0 ? (
+                  <>
+                    <div className="date-question-var">
+                      {new Date(thread.created_at * 1000).toLocaleString('ru-RU', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                      })}
+                    </div>
+                    <div className="h2-question-var">
+                      <h2>{thread.header}</h2>
+                      <div className="textAndLogo">
+                        <p className="author-p">by {usersMap[thread.user_id] || "Загрузка..."}</p>
+                      </div>
+                    </div>
+                  </>
+              ) : (
+                  <>
+                    <h2 className="h2-question">{thread.header}</h2>
+                    <div className="date-question">
+                      {new Intl.DateTimeFormat("ru-RU", {
+                        year: "numeric",
+                        month: "2-digit",
+                        day: "2-digit",
+                        hour: "2-digit",
+                        minute: "2-digit"
+                      }).format(thread.created_at * 1000)}
+                    </div>
+                    <div className="author-info">
+                      <div className="profile">
+                        <img className="user-question" src={user} alt="Аватарка" />
+                        <div className="author-name">{usersMap[thread.user_id] || "Загрузка..."}</div>
+                      </div>
+                      <div className="thread-info">
+                        <div className="thread-text">{thread.content}</div>
+                      </div>
+                    </div>
+                  </>
+              )}
+            </>
+        )}
 
-{question && question.brief && ( 
-  <>
-    {question.text.length === 0 ? (
-      <>
-       <div className="date-question-var">
-        {
-          new Date(question.created_at * 1000).toLocaleString('ru-RU', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-          })
-        }
-      </div>
+        <h2 className="h2-answers">Комментарии</h2>
+        {thread && thread.comments && thread.comments.length > 0 && (
+            <div className="answers">
+              {thread.comments.map(comment => (
+                  <div key={comment.id} className="answer" style={{ wordWrap: 'break-word' }}>
+                    <div className="date-question">
+                      {new Intl.DateTimeFormat("ru-RU", {
+                        year: "numeric",
+                        month: "2-digit",
+                        day: "2-digit",
+                        hour: "2-digit",
+                        minute: "2-digit"
+                      }).format(comment.created_at * 1000)}
+                    </div>
+                    <div className="author-info">
+                      <div className="profile">
+                        <img className="user-question" src={user} alt="Аватарка" />
+                        <div className="author-name">{usersMap[comment.user_id] || "Загрузка..."}</div>
+                      </div>
+                      <div className="answer-info">
+                        <div className="answer-text">{comment.content}</div>
+                      </div>
+                    </div>
 
-        <div className="h2-question-var">
-        <h2>Вопрос: {question.brief}</h2>
-        <div className="textAndLogo">
-        <p className="author-p">by {question.created_by_user.username}</p>
-        {/* <img src={userLogo} className="userLogo" alt="Profile" /> */}
+                    {/* Кнопка ответа на комментарий */}
+                    {isUserAuthenticated && (
+                        <button
+                            className="reply-button"
+                            onClick={() => setActiveReplyCommentId(
+                                activeReplyCommentId === comment.id ? null : comment.id
+                            )}
+                        >
+                          {activeReplyCommentId === comment.id ? "Отмена" : "Ответить"}
+                        </button>
+                    )}
 
-        </div>
-        
+                    {/* Форма ответа на комментарий */}
+                    {activeReplyCommentId === comment.id && isUserAuthenticated && (
+                        <div className="reply-form">
+                  <textarea
+                      value={replyContent}
+                      onChange={(e) => setReplyContent(e.target.value)}
+                      placeholder="Напишите ваш ответ..."
+                      maxLength={MAX_TEXT_LENGTH}
+                  />
+                          <div className="form-footer">
+                            <button
+                                type="button"
+                                className="submit-button"
+                                onClick={() => handleReplySubmit(comment.id)}
+                            >
+                              Отправить
+                            </button>
+                          </div>
+                        </div>
+                    )}
 
-        </div>
-      </>
-    ) : (
-      <>
-        <h2 className="h2-question">Вопрос: {question.brief}</h2>
-        <div className="date-question">
-          {
-            new Intl.DateTimeFormat("ru-RU", {
-              year: "numeric",
-              month: "2-digit",
-              day: "2-digit",
-              hour: "2-digit",
-              minute: "2-digit"
-            }).format(question.created_at * 1000)
-          }
-        </div>
-        <div className="author-info">
-          <div className="profile">
-            <img className="user-question" src={user} alt="Аватарка" />
-            <div className="author-name">{question.created_by_user.username} </div>
-          </div>
-          <div className="question-info">
-            <div className="question-text">{question.text}</div>
-          </div>
-        </div>
-      </>
-    )}
-  </>
-)}
+                    {comment.replies && comment.replies.length > 0 && (
+                        <div className="replies">
+                          {comment.replies.map(reply => (
+                              <div key={reply.id} className="reply" style={{ wordWrap: 'break-word' }}>
+                                <div className="date-question">
+                                  {new Intl.DateTimeFormat("ru-RU", {
+                                    year: "numeric",
+                                    month: "2-digit",
+                                    day: "2-digit",
+                                    hour: "2-digit",
+                                    minute: "2-digit"
+                                  }).format(reply.created_at * 1000)}
+                                </div>
+                                <div className="author-info">
+                                  <div className="profile">
+                                    <img className="user-question" src={user} alt="Аватарка" />
+                                    <div className="author-name">{usersMap[reply.user_id] || "Загрузка..."}</div>
+                                  </div>
+                                  <div className="reply-info">
+                                    <div className="reply-text">{reply.content}</div>
+                                  </div>
+                                </div>
 
+                                {/* Кнопка ответа на reply */}
+                                {isUserAuthenticated && (
+                                    <button
+                                        className="reply-button"
+                                        onClick={() => setActiveReplyCommentId(
+                                            activeReplyCommentId === reply.id ? null : reply.id
+                                        )}
+                                    >
+                                      {activeReplyCommentId === reply.id ? "Отмена" : "Ответить"}
+                                    </button>
+                                )}
 
-          <h2 className="h2-answers">Ответы</h2>
-      {answers.length > 0 && (
-        <div className="answers">
-          {answers.map(answer => (
-            <div key={answer.id} className="answer" style={{wordWrap:'break-word'}}>
-              <div className="date-question">{
-                new Intl.DateTimeFormat("ru-RU", {
-                  year: "numeric",
-                  month: "2-digit",
-                  day: "2-digit",
-                  hour: "2-digit",
-                  minute: "2-digit"
-                }).format(answer.created_at*1000)
-              }</div>
-              <div className="author-info">
-                <div className="profile">
-                  <img className="user-question" src={user} alt="Аватарка" />
-                  <div className="author-name">{answer.created_by_user.username} 
+                                {/* Форма ответа на reply */}
+                                {activeReplyCommentId === reply.id && isUserAuthenticated && (
+                                    <div className="reply-form">
+                          <textarea
+                              value={replyContent}
+                              onChange={(e) => setReplyContent(e.target.value)}
+                              placeholder="Напишите ваш ответ..."
+                              maxLength={MAX_TEXT_LENGTH}
+                          />
+                                      <div className="form-footer">
+                                        <button
+                                            type="button"
+                                            className="submit-button"
+                                            onClick={() => handleReplySubmit(reply.id)}
+                                        >
+                                          Отправить
+                                        </button>
+                                      </div>
+                                    </div>
+                                )}
+                              </div>
+                          ))}
+                        </div>
+                    )}
                   </div>
-                  <div className="rating">
-                  {((userRatings[answer.created_by_user.id] * 100).toFixed(0)) + '%'}
-                  </div>
-                </div>
-                <div className="answer-info">
-                  <div className="answer-text">{answer.text}</div>
-                </div>
-              </div>
-              <div className="answer-actions">
-              <button onClick={() => handleLike(answer.id, 'like')} className={`like-btn ${getActionByType(userActionsData, answer.id, 'like') ? 'actioned' : ''}`}>👍 Лайк {answer.likes}</button>
-              <button onClick={() => handleLike(answer.id, 'dislike')} className={`dislike-btn ${getActionByType(userActionsData, answer.id, 'dislike') ? 'actioned' : ''}`}>👎 Дизлайк {answer.dislikes}</button>
-   
-              </div>
+              ))}
             </div>
-          ))}
-        </div>
-      )}
+        )}
 
-
-      <form className="answer-form" onSubmit={handleAnswerSubmit}>
-        <div className="author-info">
-          <div className="profile">
-            <img className="user-question" src={user} alt="Аватарка" />
-            <div className="author-name">Вы</div>
-          </div>
-          <textarea
-            placeholder="Введите ваш ответ"
-            className="response-textarea"
-            value={newAnswer}
-            onChange={(e) => setNewAnswer(e.target.value)}
-            maxLength={MAX_TEXT_LENGTH}
-          ></textarea>
-           <small className="limit-2">{newAnswer.length}/{MAX_TEXT_LENGTH}</small>
-          <button className="submit-btn" type="submit">Отправить</button>
-        </div>
-      </form>
-    </div>
+        {/* Форма основного комментария */}
+        {isUserAuthenticated && (
+            <form className="answer-form" onSubmit={handleAnswerSubmit}>
+              <h3>Оставить комментарий</h3>
+              <textarea
+                  value={newComment}
+                  onChange={(e) => setNewComment(e.target.value)}
+                  placeholder="Напишите ваш комментарий..."
+                  maxLength={MAX_TEXT_LENGTH}
+              />
+              <div className="form-footer">
+                <button type="submit" className="submit-button">
+                  Отправить
+                </button>
+              </div>
+            </form>
+        )}
+      </div>
   );
 };
 
-export default QuestionPage;
+export default ThreadPage;

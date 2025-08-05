@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="dda62f1e-16d5-47ff-afbc-3f4abfffd822" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../../frontend/src/Chat.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../frontend/src/styles/ChatPage.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../../.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../auth/.env" beforeDir="false" afterPath="$PROJECT_DIR$/../auth/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../auth/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/../auth/pyproject.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../auth/src/forum_application.egg-info/PKG-INFO" beforeDir="false" afterPath="$PROJECT_DIR$/../auth/src/forum_application.egg-info/PKG-INFO" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../auth/src/forum_application.egg-info/requires.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../auth/src/forum_application.egg-info/requires.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../auth/src/forum_auth/domain/models/user_roles.py" beforeDir="false" afterPath="$PROJECT_DIR$/../auth/src/forum_auth/domain/models/user_roles.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../auth/src/forum_auth/presentation/api/handlers/authentication.py" beforeDir="false" afterPath="$PROJECT_DIR$/../auth/src/forum_auth/presentation/api/handlers/authentication.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../auth/src/forum_auth/presentation/api/handlers/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/../auth/src/forum_auth/presentation/api/handlers/user.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../auth/src/forum_auth/presentation/api/schemas/schemas.py" beforeDir="false" afterPath="$PROJECT_DIR$/../auth/src/forum_auth/presentation/api/schemas/schemas.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/pyproject.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/forum_application.egg-info/PKG-INFO" beforeDir="false" afterPath="$PROJECT_DIR$/src/forum_application.egg-info/PKG-INFO" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/forum_application.egg-info/SOURCES.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/forum_application.egg-info/SOURCES.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/forum_application.egg-info/requires.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/forum_application.egg-info/requires.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/forum_basic/main/api.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/forum_basic/main/api.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/forum_basic/presentation/admin/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/forum_basic/presentation/admin/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/forum_basic/presentation/api/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/forum_basic/presentation/api/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/forum_basic/presentation/api/handlers/threads.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/forum_basic/presentation/api/handlers/threads.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/forum_basic/presentation/api/schemas/schemas.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/forum_basic/presentation/api/schemas/schemas.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../../compose.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/Home.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/Home.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/ThreadsList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/ThreadsList.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/components/AuthenticationModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/components/AuthenticationModal.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/components/ThreadCreatingPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/components/ThreadCreatingPage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/components/ThreadPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/components/ThreadPage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/fonts/Montserrat/LICENSE.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/fonts/Montserrat/LICENSE.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/header/Header.css" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/header/Header.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/header/Header.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/header/Header.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/styles/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/styles/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/styles/ThreadsList.css" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/styles/ThreadsList.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../nginx/nginx.conf" beforeDir="false" afterPath="$PROJECT_DIR$/../../nginx/nginx.conf" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;pavel555980-sudo&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/pavel555980-sudo/forum&quot;,
+    &quot;accountId&quot;: &quot;19dd2cac-14b1-4ed6-9a7c-054ab8fef5cc&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="30T8LmUDiYu2hsXphYYdqlH1gXv" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;v1-develop&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/pavel555980/forum/backend/auth&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-09060db00ec0-JavaScript-PY-251.26927.74" />
+        <option value="bundled-python-sdk-657d8234b839-64d779b69b7a-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-251.26927.74" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="dda62f1e-16d5-47ff-afbc-3f4abfffd822" name="Changes" comment="" />
+      <created>1753640149217</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1753640149217</updated>
+      <workItem from="1753640150246" duration="628000" />
+      <workItem from="1753696627337" duration="225000" />
+      <workItem from="1753780902057" duration="1743000" />
+      <workItem from="1754162899625" duration="950000" />
+      <workItem from="1754210362010" duration="1860000" />
+      <workItem from="1754230948076" duration="1346000" />
+      <workItem from="1754245130658" duration="1916000" />
+      <workItem from="1754296055309" duration="13902000" />
+      <workItem from="1754380848343" duration="5015000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

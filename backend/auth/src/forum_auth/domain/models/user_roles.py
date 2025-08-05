@@ -10,6 +10,7 @@ from forum_auth.infrastructure.relational_entity import (
 )
 
 
+
 class UserRoles(BaseRelationalEntity):
     __tablename__ = "user_roles"
 

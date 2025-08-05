@@ -3,9 +3,9 @@
     src: url('../fonts/Montserrat/Montserrat-ExtraLight.ttf') format('truetype')
 }
 
-.questionsList{
+.threadsList{
     color: white;
-    width: 80%;
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
     display: flex;
@@ -13,17 +13,20 @@
     margin-bottom: 100px;
 }
 
-.question{
-    background-color:#162F46;
+.thread{
+    background-color:#fca;
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    min-width: 538px;
     max-width: 1250px;
     overflow-wrap: break-word;
+    padding: 15px;
+    border-radius: 10px;
 }
 
-.questionInfo p{
+.threadInfo p{
     display: flex;
     float: right;
     max-width: 100%;
@@ -32,26 +35,20 @@
 }
 
 
-.arrow{
-    width: 30px;
-    height:30px;
-    padding-left: 1.1%;
-    padding-right: 1.1%;
-}
-
 .briefText{
     float: left;
-    font-family: Montserrat;
+    font-family: Montserrat, serif;
     font-size: 20px;
     text-wrap: wrap;
     flex-shrink: 1;
     width: 75%;
     padding: 15px 0;
     overflow-wrap: break-word;
+    color: #800;
 }
 
 .createdAt{
-    font-family: Montserrat;
+    font-family: Montserrat, serif;
     font-size: 14px;
     margin-right: 1%;
     padding-left: 5%;
@@ -62,7 +59,7 @@
 
 .createdBy{
     max-width: 10em;
-    font-family: Montserrat;
+    font-family: Montserrat, serif;
     font-size: 20px;
     text-wrap: nowrap;
     display: inline-block;
@@ -74,4 +71,9 @@
     text-decoration: none;
     color: white !important;
     margin: 5px 0;
+}
+
+.replies{
+    margin-top: 5vh;
+    margin-left: 3vw;
 }

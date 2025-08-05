@@ -27,7 +27,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 35vw;
+    width: 48vw;
 }
 .user{
     color: #800;
@@ -35,6 +35,11 @@
     margin-left: 10%;
     cursor: pointer;
     align-items: center;
+}
+
+.linkSite{
+    text-decoration: none;
+    color: #800;
 }
 
 .userLogo{
@@ -52,7 +57,7 @@
 }
 
 .exit{
-    margin-left: 100px;
+    margin-left: 8%;
     position: relative;
     top: 25%;
     width: 100px;

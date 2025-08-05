@@ -133,3 +133,6 @@ class AuthResponseDTO(BaseDTO):
 class FriendsDTO(BaseDTO):
     user_id: UserID
     friends: Friends
+
+class JWTResponseDTO(BaseDTO):
+    access_token: str

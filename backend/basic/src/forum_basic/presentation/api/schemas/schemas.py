@@ -8,6 +8,12 @@ from pydantic.functional_validators import BeforeValidator
 from forum_basic.infrastructure.dto import BaseDTO
 from pygments.lexers import q
 
+Timestamp = Annotated[datetime, PlainSerializer(
+    lambda x: int(x.timestamp()),
+    return_type=int,
+    when_used="json",
+)]
+
 UserID = Annotated[
     UUID4,
     Field(
@@ -30,27 +36,42 @@ Content = Annotated[
 ]
 
 CreatedAt = Annotated[
-    datetime,
+    Timestamp,
     Field(
         title="Created at.",
     )
 ]
 
 UpdatedAt = Annotated[
-    datetime,
+    Timestamp,
     Field(
         title="Updated at.",
     )
 ]
 
+ID = Annotated[
+    int,
+    Field(
+        title="ID.",
+    )
+]
+
+JWT = Annotated[
+    str,
+    Field(
+        title="JWT",
+    )
+]
+
 class ReplyDTO(BaseDTO):
+    id: ID
     user_id: UserID
     content: Content
-    createdAt: CreatedAt
-    updatedAt: UpdatedAt
+    created_at: CreatedAt
+    updated_at: UpdatedAt
 
 class CreateReplyDTO(BaseDTO):
-    user_id: UserID
+    jwt: JWT
     content: Content
 
 Replies = Annotated[
@@ -61,14 +82,15 @@ Replies = Annotated[
 ]
 
 class CommentDTO(BaseDTO):
+    id: ID
     user_id: UserID
     content: Content
-    createdAt: CreatedAt
-    updatedAt: UpdatedAt
+    created_at: CreatedAt
+    updated_at: UpdatedAt
     replies: List[ReplyDTO]
 
 class CreateCommentDTO(BaseDTO):
-    user_id: UserID
+    jwt: JWT
     content: Content
 
 Comments = Annotated[
@@ -79,11 +101,12 @@ Comments = Annotated[
 ]
 
 class CreateThreadDTO(BaseDTO):
-    user_id: UserID
+    jwt: JWT
     header: Header
     content: Content
 
 class ThreadDTO(BaseDTO):
+    id: ID
     user_id: UserID
     created_at: CreatedAt
     updated_at: UpdatedAt
@@ -92,4 +115,5 @@ class ThreadDTO(BaseDTO):
     comments: Comments
 
 class UpdateContentDTO(BaseDTO):
+    jwt: JWT
     content: Content

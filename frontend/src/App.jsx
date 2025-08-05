@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 import Header from './header/Header'
 import Footer from './footer/Footer'
-import QuestionPage from './components/QuestionPage';
+import ThreadPage from './components/ThreadPage.jsx';
 import Home from "./Home.jsx";
 
 
@@ -21,8 +21,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route
-              path="/questions/:id"
-              element={<QuestionPage/>}
+              path="/thread/:id"
+              element={<ThreadPage/>}
           />
         </Routes>
       </Router>

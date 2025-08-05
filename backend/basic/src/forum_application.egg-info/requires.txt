@@ -6,6 +6,7 @@ fastapi~=0.111.0
 alembic
 bcrypt
 sqladmin[full]
+pyjwt
 
 [dev]
 ruff

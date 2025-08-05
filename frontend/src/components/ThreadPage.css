@@ -43,7 +43,7 @@
 }
 
 
-.question-page {
+.thread-page {
     display: flex;
     flex-direction: column;
     height: 100vh;
@@ -79,13 +79,13 @@
     position: relative;
 }
 
-.question-info, .answer-info{
+.thread-info, .answer-info{
     padding: 10px;
     display: flex;
     align-items: flex-start;
 }
 
-.question-actions{
+.thread-actions{
    position:absolute; bottom:-40px; right: 0;
 }
 
@@ -178,7 +178,7 @@
     right: 0;
 }
 
-.question-text,.answer-text{
+.thread-text,.answer-text{
   max-width: 100vh;
   overflow-wrap: break-word;
   font-family: Montserrat-Bold ;

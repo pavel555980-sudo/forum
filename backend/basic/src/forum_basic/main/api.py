@@ -16,7 +16,7 @@ from forum_basic.presentation import admin
 
 
 app = FastAPI(
-    root_path="/api",
+    root_path="/main_api",
     openapi_tags=tags_metadata,
     title="FORUM REST API",
 )
@@ -41,9 +41,6 @@ async def include_admin(container: AsyncContainer, app_instance):
         engine,
         authentication_backend=SQLAdminAuth(config),
     )
-
-    admin_instance.add_view(admin.user.UserView)
-    admin_instance.add_view(admin.user_session.UserSessionView)
 
 
 async def prepare():

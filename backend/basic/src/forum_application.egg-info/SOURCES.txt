@@ -27,12 +27,9 @@ src/forum_basic/main/api.py
 src/forum_basic/presentation/__init__.py
 src/forum_basic/presentation/admin/__init__.py
 src/forum_basic/presentation/admin/auth_backend.py
-src/forum_basic/presentation/admin/user.py
-src/forum_basic/presentation/admin/user_session.py
 src/forum_basic/presentation/api/__init__.py
 src/forum_basic/presentation/api/handlers/__init__.py
 src/forum_basic/presentation/api/handlers/threads.py
-src/forum_basic/presentation/api/handlers/user.py
 src/forum_basic/presentation/api/schemas/__init__.py
 src/forum_basic/presentation/api/schemas/schemas.py
 src/forum_basic/presentation/api/schemas/tags_metadata.py
